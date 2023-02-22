@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.basic-color {
+  @apply bg-zinc-200 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200;
+}
+
+.basic-input {
+  @apply m-2 px-4 py-2 border border-sky-400 rounded;
+}
+
+.body {
+  @apply basic-color;
+}
+
+.input-date {
+  @apply basic-color basic-input;
+}
+.input-time {
+  @apply basic-color basic-input;
+}
+
+.button {
+  @apply basic-color basic-input transition duration-300 hover:bg-sky-400 hover:text-zinc-900;
+}
