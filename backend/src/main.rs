@@ -2,6 +2,7 @@ mod api;
 mod models;
 mod ntp;
 
+use chrono::Utc;
 use std::sync::Arc;
 use tokio::sync::Mutex;
 
@@ -10,15 +11,8 @@ async fn main() {
     println!("Hello! ntp-time-machine starting...");
 
     let shared_state = Arc::new(Mutex::new(models::AppState {
-        time: models::Time {
-            year: 2023,
-            month: 2,
-            day: 22,
-
-            hour: 15,
-            minute: 4,
-            second: 0,
-        },
+        time: Utc::now().naive_utc(),
+        updated_at: Utc::now().naive_utc(),
     }));
     let shared_state_ntp = shared_state.clone();
     tokio::spawn(async move {

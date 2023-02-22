@@ -1,7 +1,7 @@
 import { axios } from "./axios";
-import { Time } from "@/models/time";
+import { Time, DateTimeApiPayload } from "@/models/time";
 
-export const setTime = (t: Time) => {
+export const setTime = (t: Time | DateTimeApiPayload) => {
   try {
     axios.put("/time", t);
   } catch (err) {

@@ -7,3 +7,7 @@ export type Time = {
   minute: number;
   second: number;
 };
+
+export type DateTimeApiPayload = {
+  date_time: string;
+};

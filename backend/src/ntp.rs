@@ -1,5 +1,6 @@
 mod format;
 
+use chrono::Utc;
 use tokio::net::UdpSocket;
 
 use crate::models::SharedState;
@@ -21,20 +22,10 @@ impl NtpServer {
         let mut buf = [0; 1024];
         loop {
             let (len, addr) = self.socket.recv_from(&mut buf).await.unwrap();
+            let received_at = Utc::now().naive_utc();
 
-            self.socket
-                .send_to(
-                    self.shared_state
-                        .lock()
-                        .await
-                        .time
-                        .format_string()
-                        .as_str()
-                        .as_bytes(),
-                    addr,
-                )
-                .await
-                .ok();
+            let payload = format::format(&*self.shared_state.lock().await, &received_at);
+            self.socket.send_to(&payload, addr).await.ok();
         }
     }
 }

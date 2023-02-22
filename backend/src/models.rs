@@ -1,7 +1,12 @@
+use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tokio::sync::Mutex;
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct DateTimeApiPayload {
+    pub date_time: String,
+}
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Time {
     pub year: usize,
@@ -24,10 +29,14 @@ impl Time {
             self.second
         )
     }
+
+    //pub fn as_timestamp(&self) -> u64 {
+    //}
 }
 
 #[derive(Debug)]
 pub struct AppState {
-    pub time: Time,
+    pub time: NaiveDateTime,
+    pub updated_at: NaiveDateTime,
 }
 pub type SharedState = Arc<Mutex<AppState>>;
